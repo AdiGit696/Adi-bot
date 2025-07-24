@@ -7,7 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 # --- CONFIGURATION ---
-COHERE_API_KEY = os.getenv("COHERE_API_KEY") or "your-cohere-api-key"  # Replace with your key or set as env var
+COHERE_API_KEY = st.secrets["COHERE_API_KEY"]  # ✅ Will work on Streamlit Cloud
 co = cohere.Client(COHERE_API_KEY)
 
 USECASE_FILE = "usecases.json"
