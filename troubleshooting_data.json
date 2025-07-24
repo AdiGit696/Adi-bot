@@ -1,0 +1,154 @@
+{
+  "issues": [
+    {
+      "id": 1,
+      "error": "Windows 10 client not showing hybrid join",
+      "possible_causes": [
+        "Device not synced with Azure AD Connect",
+        "Service Connection Point (SCP) not configured properly",
+        "Machine not in correct OU for sync"
+      ],
+      "steps_to_resolve": [
+        "Run `dsregcmd /status` and check `AzureADJoined` and `DomainJoined` status",
+        "Verify SCP exists using PowerShell: `Get-ADObject -Filter 'ObjectClass -eq \"serviceConnectionPoint\"'`",
+        "Ensure the device is in the OU selected for sync in Azure AD Connect",
+        "Restart the machine or run `gpupdate /force` and re-check"
+      ]
+    },
+    {
+      "id": 2,
+      "error": "Wallpaper GPO not applying",
+      "possible_causes": [
+        "GPO not linked to the correct OU",
+        "Wallpaper file path is inaccessible or missing",
+        "Group Policy has not refreshed on the client"
+      ],
+      "steps_to_resolve": [
+        "Run `gpresult /h gp.html` to verify if the GPO is applied",
+        "Check if the wallpaper path in GPO is reachable from the client machine",
+        "Run `gpupdate /force` and relogin",
+        "Ensure the GPO is linked and enforced on the correct OU"
+      ]
+    },
+    {
+      "id": 3,
+      "error": "Azure AD Connect sync failed",
+      "possible_causes": [
+        "Password or account issues for sync service",
+        "Connectivity to Azure endpoint is blocked",
+        "Sync rules misconfigured"
+      ],
+      "steps_to_resolve": [
+        "Run `Start-ADSyncSyncCycle -PolicyType Delta` to manually trigger sync",
+        "Check Event Viewer > Applications and Services Logs > Directory Synchronization",
+        "Open Synchronization Service Manager and look for error details",
+        "Ensure Azure AD Connect account credentials are valid"
+      ]
+    },
+    {
+      "id": 4,
+      "error": "Account locked — how to unlock",
+      "possible_causes": [
+        "User entered incorrect password multiple times",
+        "Old saved credentials on other devices or mapped drives",
+        "GPO lockout threshold too low"
+      ],
+      "steps_to_resolve": [
+        "Unlock using Active Directory Users and Computers (ADUC)",
+        "Run `Search-ADAccount -LockedOut` to find locked users",
+        "Use `Account Lockout Tool` to track source of bad attempts",
+        "Check Event Viewer > Security logs for Event ID 4740"
+      ]
+    },
+    {
+      "id": 5,
+      "error": "Cannot access shared folder after joining domain",
+      "possible_causes": [
+        "Incorrect NTFS or share permissions",
+        "DNS resolution issues",
+        "Firewall blocking file sharing"
+      ],
+      "steps_to_resolve": [
+        "Check folder permissions (NTFS + Share)",
+        "Run `nslookup` and `ping` to verify DNS resolution",
+        "Ensure 'File and Printer Sharing' is enabled in firewall",
+        "Use `net use` command to map the share manually"
+      ]
+    },
+    {
+      "id": 6,
+      "error": "Service connection point not found in Azure AD",
+      "possible_causes": [
+        "SCP not created by Azure AD Connect",
+        "Insufficient permissions during AD Connect setup",
+        "OU containing SCP was filtered out"
+      ],
+      "steps_to_resolve": [
+        "Run `Get-ADObject -Filter 'ObjectClass -eq \"serviceConnectionPoint\"'`",
+        "Re-run Azure AD Connect and ensure SCP creation was successful",
+        "Verify Enterprise Admin rights were used during setup",
+        "Check Azure AD Connect OU filtering options"
+      ]
+    },
+    {
+      "id": 7,
+      "error": "Logon auditing not working",
+      "possible_causes": [
+        "GPO for auditing not configured or not applied",
+        "Incorrect audit policy settings",
+        "Logs being overwritten or full"
+      ],
+      "steps_to_resolve": [
+        "Enable logon auditing in GPO: Computer Config > Policies > Security Settings > Audit Policy",
+        "Check Resultant Set of Policy using `rsop.msc`",
+        "Ensure Security log size is sufficient and not overwritten",
+        "Look for Event IDs 4624, 4625 in Event Viewer > Security logs"
+      ]
+    },
+    {
+      "id": 8,
+      "error": "Backup failed — missing shadow copy",
+      "possible_causes": [
+        "Volume Shadow Copy Service (VSS) not running",
+        "Disk space insufficient for shadow copy",
+        "Backup target volume is offline"
+      ],
+      "steps_to_resolve": [
+        "Run `vssadmin list writers` and ensure no errors",
+        "Start the Volume Shadow Copy service",
+        "Check Event Viewer > Application logs for VSS errors",
+        "Free up disk space on source and target drives"
+      ]
+    },
+    {
+      "id": 9,
+      "error": "Sysmon not showing events in Log Analytics",
+      "possible_causes": [
+        "Sysmon config not collecting target events",
+        "Log Analytics agent misconfigured",
+        "Sysmon output not routed to the right log channel"
+      ],
+      "steps_to_resolve": [
+        "Check Sysmon config XML for required event types",
+        "Use `Get-WinEvent` to verify local logs",
+        "Verify Data Collection Rules (DCR) in Azure Monitor",
+        "Ensure `Microsoft-Windows-Sysmon/Operational` is being collected"
+      ]
+    },
+    {
+      "id": 10,
+      "error": "Client VM stuck on 'Preparing Windows' forever",
+      "possible_causes": [
+        "Corrupt user profile or first-time logon process stuck",
+        "Roaming profile or network delay",
+        "Script or software running at logon hangs"
+      ],
+      "steps_to_resolve": [
+        "Try logging in with a different user account",
+        "Boot into Safe Mode and check `shell` or `RunOnce` registry keys",
+        "Check network drive mappings or scripts in `Startup` folder",
+        "Reset user profile by renaming `C:\\Users\\<username>` and registry SID key"
+      ]
+    }
+  ]
+}

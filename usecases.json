@@ -1,0 +1,102 @@
+[
+    {
+        "question": "How to unlock a user account in Active Directory?",
+        "answer": "Open Active Directory Users and Computers (ADUC), find the user, right-click and select 'Unlock Account'. Alternatively, use PowerShell: Unlock-ADAccount -Identity username"
+    },
+    {
+        "question": "How to check AD account lockout events?",
+        "answer": "Open Event Viewer > Security Logs > Filter for Event ID 4740 to find account lockout incidents."
+    },
+    {
+        "question": "How to join a Windows client to a domain?",
+        "answer": "Go to System > Rename this PC (Advanced) > Change domain, enter domain name (e.g., lab.com), and provide domain credentials."
+    },
+    {
+        "question": "How to check Azure AD Connect sync status?",
+        "answer": "Use PowerShell command: Get-ADSyncScheduler or check 'Synchronization Service Manager' tool."
+    },
+    {
+        "question": "How to force a sync in Azure AD Connect?",
+        "answer": "Run: Start-ADSyncSyncCycle -PolicyType Delta in PowerShell with elevated rights."
+    },
+    {
+        "question": "How to apply a GPO to a specific OU?",
+        "answer": "Open GPMC, right-click the OU, and select 'Link an Existing GPO'. Choose the GPO to apply."
+    },
+    {
+        "question": "How to push wallpaper using GPO?",
+        "answer": "Create or edit a GPO, navigate to User Configuration > Administrative Templates > Desktop > Desktop > Desktop Wallpaper."
+    },
+    {
+        "question": "How to install Windows Admin Center?",
+        "answer": "Download from Microsoft, install on a Windows 10/11/Server machine, and access via web browser at https://localhost:6516."
+    },
+    {
+        "question": "How to perform system state backup?",
+        "answer": "Use Windows Server Backup > Backup Once > Custom > Add Items > System State. Alternatively, run: wbadmin start systemstatebackup -backuptarget:D:"
+    },
+    {
+        "question": "How to restore from a system state backup?",
+        "answer": "Open Windows Server Backup > Recover > Select backup > Choose System State > Follow the wizard to restore."
+    },
+    {
+        "question": "How to check replication status in AD?",
+        "answer": "Use repadmin /replsummary to check replication health and errors."
+    },
+    {
+        "question": "How to audit login events using GPO?",
+        "answer": "Edit GPO > Computer Configuration > Windows Settings > Security Settings > Local Policies > Audit Policy > Audit logon events."
+    },
+    {
+        "question": "How to enable Sysmon for detailed logging?",
+        "answer": "Download Sysmon from Sysinternals, install via: sysmon -accepteula -i sysmonconfig.xml"
+    },
+    {
+        "question": "How to create a new DHCP scope?",
+        "answer": "Open DHCP console > Right-click IPv4 > New Scope > Follow the wizard to define range, lease, options."
+    },
+    {
+        "question": "How to block USB using GPO?",
+        "answer": "Navigate to Computer Configuration > Administrative Templates > System > Removable Storage Access > Deny All Access."
+    },
+    {
+        "question": "How to set up Hybrid Azure AD Join?",
+        "answer": "Configure SCP using Azure AD Connect, ensure domain-joined machines are synced and have proper group policies."
+    },
+    {
+        "question": "How to enable Controlled Folder Access?",
+        "answer": "Open Windows Security > Virus & threat protection > Manage ransomware protection > Enable Controlled folder access."
+    },
+    {
+        "question": "How to get list of installed updates via PowerShell?",
+        "answer": "Run: Get-HotFix | Sort-Object InstalledOn -Descending"
+    },
+    {
+        "question": "How to troubleshoot DNS resolution issues?",
+        "answer": "Use nslookup, ipconfig /flushdns, and ensure correct DNS settings in TCP/IP config."
+    },
+    {
+        "question": "How to check full disk space via PowerShell?",
+        "answer": "Use: Get-PSDrive | Where-Object {$_.Provider -like '*FileSystem*'}"
+    },
+    {
+        "question": "How to add a new domain user?",
+        "answer": "Use Active Directory Users and Computers or PowerShell: New-ADUser -Name 'Test User' -SamAccountName testuser -AccountPassword (Read-Host -AsSecureString) -Enabled $true"
+    },
+    {
+        "question": "How to track failed login attempts?",
+        "answer": "Open Event Viewer > Windows Logs > Security > Filter for Event ID 4625."
+    },
+    {
+        "question": "How to find locked-out account source machine?",
+        "answer": "Check Event ID 4740 on DC, find 'Caller Computer Name' field to locate the source."
+    },
+    {
+        "question": "How to restart a service using PowerShell?",
+        "answer": "Run: Restart-Service -Name 'servicename'"
+    },
+    {
+        "question": "How to enable Remote Desktop using GPO?",
+        "answer": "Navigate to Computer Configuration > Policies > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Connections > Allow users to connect remotely."
+    }
+]

@@ -1,0 +1,4 @@
+streamlit
+cohere
+scikit-learn
+python-dotenv
